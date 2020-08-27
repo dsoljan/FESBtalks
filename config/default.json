@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://domina:domina@fesbtalks.cfm69.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
+}
