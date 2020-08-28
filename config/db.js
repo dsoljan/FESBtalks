@@ -8,6 +8,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true, /// is deprecated without
       useCreateIndex: true,
+      useFindAndModify: false,
     }); //returns a promise, hence async
 
     console.log('MongoDB Connected.');
