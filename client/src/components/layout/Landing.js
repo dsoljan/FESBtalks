@@ -19,6 +19,7 @@ const Landing = ({ isAuthenticated }) => {
           >
             <img
               src={Logo}
+              alt=''
               style={{ margin: 'auto', height: '400px', width: '400px' }}
             ></img>
           </Link>
