@@ -7,10 +7,12 @@ const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 // @route   GET api/profile/me
 // @desc    get current users profile
 // @access  private -- requires sending a token
+
 router.get('/me', auth, async (req, res) => {
   //mongoose returns a promise, funct needs to be async
   try {
@@ -32,6 +34,7 @@ router.get('/me', auth, async (req, res) => {
 // @route   POST api/profile
 // @desc    create or update a user profile
 // @access  private -- requires sending a token
+
 router.post(
   '/',
   [
@@ -153,7 +156,8 @@ router.get('/user/:user_id', async (req, res) => {
 
 router.delete('/', auth, async (req, res) => {
   try {
-    // @todo - remove users posts
+    // remove user posts
+    await Post.deleteMany({ user: req.user.id });
     // remove profile
     await Profile.findOneAndRemove({ user: req.user.id });
     // remove user
@@ -224,6 +228,7 @@ router.put(
 // @route   DELETE api/profile/experience/:exp_id
 // @desc    delete experience from profile
 // @access  private
+
 router.delete('/experience/:exp_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id });
@@ -303,6 +308,7 @@ router.put(
 // @route   DELETE api/profile/education/:edu_id
 // @desc    delete education from profile
 // @access  private
+
 router.delete('/education/:edu_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id });

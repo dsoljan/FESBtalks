@@ -42,7 +42,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <nav className='navbar'>
       <p style={{ width: '50px', height: '50px' }}>
-        <img src={logo_notext} />
+        <img src={logo_notext} alt='' />
       </p>
 
       {!loading && (
