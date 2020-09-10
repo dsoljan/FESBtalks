@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Logo from '../../img/logo_transparent.png';
+import { Button } from '@material-ui/core';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -14,7 +15,7 @@ const Landing = ({ isAuthenticated }) => {
       <div className='dark-overlay'>
         <div className='landing-inner'>
           <Link
-            to='index.html'
+            to='/dashboard'
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <img
@@ -25,14 +26,18 @@ const Landing = ({ isAuthenticated }) => {
           </Link>
 
           <p className='lead'>Share posts and find jobs within the community</p>
-          <div className='buttons'>
-            <Link to='/register' className='btn btn-primary'>
-              Sign Up
-            </Link>
-            <Link to='/login' className='btn btn-light'>
-              Login
-            </Link>
-          </div>
+          <span>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ margin: '0 2em' }}
+            >
+              <Link to='/register'>Sign Up</Link>
+            </Button>
+            <Button variant='contained' style={{ margin: '0 2em' }}>
+              <Link to='/login'>Login</Link>
+            </Button>
+          </span>
         </div>
       </div>
     </section>
