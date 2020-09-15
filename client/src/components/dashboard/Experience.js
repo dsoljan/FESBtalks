@@ -1,47 +1,64 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { deleteExperience } from '../../actions/profile';
+import {
+  Button,
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
+
+import Typography from '@material-ui/core/Typography';
 
 const Experience = ({ experience, deleteExperience }) => {
   const experiences = experience.map((exp) => (
-    <tr key={exp._id}>
-      <td>{exp.company}</td>
-      <td className='hide-sm'>{exp.title}</td>
-      <td>
+    <TableRow key={exp._id}>
+      <TableCell>{exp.company}</TableCell>
+      <TableCell>{exp.title}</TableCell>
+      <TableCell>
         <Moment format='DD/MM/YYYY'>{exp.from}</Moment> -{' '}
         {exp.to === null ? (
           'now'
         ) : (
           <Moment format='DD/MM/YYYY'>{exp.to}</Moment>
         )}
-      </td>
-      <td>
-        <button
-          onClick={() => deleteExperience(exp._id)}
-          className='btn btn-danger'
-        >
+      </TableCell>
+      <TableCell>
+        <Button color='secondary' onClick={() => deleteExperience(exp._id)}>
           Delete
-        </button>
-      </td>
-    </tr>
+        </Button>
+      </TableCell>
+    </TableRow>
   ));
   return (
-    <Fragment>
-      <h2 className='my-2'>Experience Credentials</h2>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th className='hide-sm'>Title</th>
-            <th className='hide-sm'>Years</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>{experiences}</tbody>
-      </table>
-    </Fragment>
+    <Box padding='2em 4em'>
+      <Typography variant='h5' style={{ color: '#7085b7' }}>
+        Experience Credentials
+      </Typography>
+      <Table>
+        <TableContainer>
+          <TableHead>
+            <TableRow>
+              <TableCell>Company</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Years</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          {!experiences ? (
+            <p>You haven't added experiences yet.</p>
+          ) : (
+            <TableBody>{experiences}</TableBody>
+          )}
+        </TableContainer>
+      </Table>
+    </Box>
   );
 };
 

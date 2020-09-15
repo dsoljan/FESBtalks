@@ -1,5 +1,4 @@
 import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
@@ -7,6 +6,11 @@ import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
+import { DeleteRounded } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -21,32 +25,60 @@ const Dashboard = ({
   return loading && profile === null ? (
     <Spinner />
   ) : (
-    <Fragment>
-      <h1 className='large text-primary'> Dashboard</h1>
-      <p className='lead'>
-        <i className='fas fa-user'>Welcome {user && user.name}</i>
-      </p>
+    <Container
+      component='main'
+      //
+      style={{
+        background: 'black',
+        height: 'fit-content',
+      }}
+    >
+      <CssBaseline />
+      <Typography variant='h2' style={{ padding: '10px' }}>
+        {' '}
+        Dashboard
+      </Typography>
+      <Typography
+        variant='body1'
+        color='textSecondary'
+        style={{ paddingLeft: '3em' }}
+      >
+        {' '}
+        Welcome {user && user.name}!
+      </Typography>
       {profile !== null ? (
         <Fragment>
           <DashboardActions />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
 
-          <div className='my-2'>
-            <button className='btn btn-danger' onClick={() => deleteAccount()}>
-              <i className='fas fa-user-minus'>Delete my account</i>
-            </button>
-          </div>
+          <Button
+            variant='outlined'
+            color='primary'
+            style={{ margin: '2em 3em' }}
+            onClick={() => deleteAccount()}
+            startIcon={<DeleteRounded />}
+          >
+            Delete my account
+          </Button>
         </Fragment>
       ) : (
-        <Fragment>
-          <p>You have not yet created a profile, please add some info</p>
-          <Link to='/create-profile' className='btn btn-primary my-1'>
+        <Container
+          style={{
+            background: 'black',
+            height: '73vh',
+            padding: '3em 0 0 0',
+          }}
+        >
+          <Typography variant='body1' style={{ paddingBottom: '2em' }}>
+            You have not yet created a profile, please add some info.
+          </Typography>
+          <Button href='/create-profile' variant='outlined' color='primary'>
             Create profile
-          </Link>
-        </Fragment>
+          </Button>
+        </Container>
       )}
-    </Fragment>
+    </Container>
   );
 };
 

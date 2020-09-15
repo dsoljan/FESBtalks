@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
+import { Typography } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
 const ProfileAbout = ({
   profile: {
     bio,
@@ -8,20 +9,24 @@ const ProfileAbout = ({
     user: { name },
   },
 }) => (
-  <div className='profile-about bg-light p-2'>
+  <div>
     {bio && (
       <Fragment>
-        <h2 className='text-primary'>{name.trim().split(' ')[0]}'s Bio</h2>
-        <p> {bio}</p>
-        <div className='line'></div>
+        <Typography variant='h6' style={{ color: '#7085b7' }}>
+          {name.trim().split(' ')[0]}'s Bio
+        </Typography>
+        <Typography variant='body1'> {bio}</Typography>
       </Fragment>
     )}
 
-    <h2 className='text-primary'>Skill Set</h2>
-    <div className='skills'>
+    <Typography variant='h6' style={{ color: '#7085b7' }}>
+      Skill Set
+    </Typography>
+    <div>
       {skills.map((skill, index) => (
-        <div key={index} className='p-1'>
-          <i className='fas fa-check'>{skill}</i>
+        <div key={index}>
+          <CheckIcon />
+          {skill}
         </div>
       ))}
     </div>

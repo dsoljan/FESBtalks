@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Logo from '../../img/logo_transparent.png';
-import { Button } from '@material-ui/core';
+import { Button, Box, Link } from '@material-ui/core';
+import { AnimateOnChange } from 'react-animation';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -11,36 +12,50 @@ const Landing = ({ isAuthenticated }) => {
   }
 
   return (
-    <section className='landing'>
-      <div className='dark-overlay'>
-        <div className='landing-inner'>
-          <Link
-            to='/dashboard'
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
+    <Box
+      className='landing'
+      display='flex'
+      flexDirection='row'
+      justifyContent='center'
+    >
+      <Box style={{ margin: '1em 0' }}>
+        <Link href='/dashboard'>
+          <AnimateOnChange>
             <img
               src={Logo}
               alt=''
-              style={{ margin: 'auto', height: '400px', width: '400px' }}
+              style={{ height: '450px', width: '450px' }}
             ></img>
-          </Link>
-
-          <p className='lead'>Share posts and find jobs within the community</p>
-          <span>
+          </AnimateOnChange>
+        </Link>
+        <Box
+          display='flex'
+          flexDirection='column'
+          alignItems='center'
+          margin='-2em 0 0 0'
+        >
+          <h4>Share posts and find jobs within the community</h4>
+          <span display='flex'>
             <Button
               variant='contained'
               color='primary'
-              style={{ margin: '0 2em' }}
+              size='large'
+              href='/register'
             >
-              <Link to='/register'>Sign Up</Link>
+              Sign Up
             </Button>
-            <Button variant='contained' style={{ margin: '0 2em' }}>
-              <Link to='/login'>Login</Link>
+            <Button
+              variant='contained'
+              style={{ margin: '0 2em' }}
+              size='large'
+              href='/login'
+            >
+              Login
             </Button>
           </span>
-        </div>
-      </div>
-    </section>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

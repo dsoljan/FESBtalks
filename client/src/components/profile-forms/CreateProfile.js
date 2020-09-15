@@ -1,8 +1,49 @@
 import React, { useState, Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile } from '../../actions/profile';
+import {
+  MenuItem,
+  Select,
+  TextField,
+  CssBaseline,
+  Container,
+  Link,
+  Typography,
+  Button,
+  Box,
+} from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: '2em',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  field: {
+    margin: '0.75em',
+  },
+  social: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+}));
 
 const CreateProfile = ({ createProfile, history }) => {
   const [formData, setFormData] = useState({
@@ -45,177 +86,257 @@ const CreateProfile = ({ createProfile, history }) => {
     createProfile(formData, history);
   };
 
+  const classes = useStyles();
+
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Create Your Profile</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Let's get some information to make your
-        profile stand out
-      </p>
-      <small>* = required field</small>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <select name='status' value={status} onChange={(e) => onChange(e)}>
-            <option value='0'>* Select Status</option>
-            <option value='Developer'>Developer</option>
-            <option value='Junior Developer'>Junior Developer</option>
-            <option value='Senior Developer'>Senior Developer</option>
-            <option value='Manager'>Manager</option>
-            <option value='Student or Learning'>Student or Learning</option>
-            <option value='Instructor'>Instructor or Teacher</option>
-            <option value='Intern'>Intern</option>
-            <option value='Other'>Other</option>
-          </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Company'
-            name='company'
-            value={company}
+    <Container
+      component='main'
+      style={{
+        background: 'black',
+        height: 'max-content',
+        padding: '1em 0 2em 0',
+      }}
+    >
+      <CssBaseline />
+      <Typography variant='h2' style={{ padding: '15px' }}>
+        {' '}
+        Create Your Profile
+      </Typography>
+      <Typography
+        variant='body1'
+        color='textSecondary'
+        style={{ paddingLeft: '3em' }}
+      >
+        {' '}
+        Let's get some information to make your profile stand out
+      </Typography>
+      <Typography
+        variant='body2'
+        color='textSecondary'
+        style={{ paddingLeft: '3em' }}
+      >
+        {' '}
+        (* fields are required)
+      </Typography>
+      <Container className={classes.paper} maxWidth='xs'>
+        <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
+          <Select
+            name='status'
+            value={status}
+            variant='outlined'
+            fullWidth
+            margin='auto'
             onChange={(e) => onChange(e)}
+            className={classes.field}
+          >
+            <MenuItem value='0'>* Select Status</MenuItem>
+            <MenuItem value='Developer'>Developer</MenuItem>
+            <MenuItem value='Junior Developer'>Junior Developer</MenuItem>
+            <MenuItem value='Senior Developer'>Senior Developer</MenuItem>
+            <MenuItem value='Manager'>Manager</MenuItem>
+            <MenuItem value='Student or Learning'>Student or Learning</MenuItem>
+            <MenuItem value='Instructor'>Instructor or Teacher</MenuItem>
+            <MenuItem value='Intern'>Intern</MenuItem>
+            <MenuItem value='Other'>Other</MenuItem>
+          </Select>
+          <p style={{ marginLeft: '1.5em' }} className={classes.field}>
+            <Typography
+              variant='caption'
+              className='form-text'
+              color='textSecondary'
+            >
+              Give us an idea of where you are at in your career
+            </Typography>
+          </p>
+
+          <TextField
+            variant='outlined'
+            id='outlined-company'
+            label='Company'
+            name='company'
+            margin='normal'
+            fullWidth
+            value={company || ''}
+            onChange={(e) => onChange(e)}
+            helperText='Could be your own company or one you work for'
+            className={classes.field}
           />
-          <small className='form-text'>
-            Could be your own company or one you work for
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Website'
+
+          <TextField
+            id='outlined-website'
+            label='Website'
             name='website'
+            margin='normal'
+            fullWidth
             value={website}
             onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            Could be your own or a company website
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Location'
+            variant='outlined'
+            helperText=' Could be your own or a company website'
+            className={classes.field}
+          ></TextField>
+
+          <TextField
+            id='outlined-location'
+            label='Location'
             name='location'
             value={location}
+            margin='normal'
+            fullWidth
             onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            City and state suggested (eg. Boston, MA)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* Skills'
-            name='skills'
+            variant='outlined'
+            helperText=' City and state suggested (eg. Boston, MA)'
+            className={classes.field}
+          ></TextField>
+
+          <TextField
+            id='outlined-skills'
+            required
+            label='Skills'
             value={skills}
+            name='skills'
+            margin='normal'
+            fullWidth
             onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Github Username'
+            variant='outlined'
+            helperText=' Please use comma separated values (eg. HTML,CSS,PHP)'
+            className={classes.field}
+          ></TextField>
+
+          <TextField
+            id='outlined-github'
+            label='Github Username'
             name='githubusername'
             value={githubusername}
+            margin='normal'
+            fullWidth
             onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>
-            If you want your latest repos and a Github link, include your
-            username
-          </small>
-        </div>
-        <div className='form-group'>
-          <textarea
-            placeholder='A short bio of yourself'
+            variant='outlined'
+            helperText='If you want your latest repos and a Github link, include your username'
+            className={classes.field}
+          ></TextField>
+
+          <TextField
+            id='outlined-bio'
+            label='A short bio of yourself'
             name='bio'
             value={bio}
+            margin='normal'
+            fullWidth
+            multiline
+            rows={4}
             onChange={(e) => onChange(e)}
-          ></textarea>
-          <small className='form-text'>Tell us a little about yourself</small>
-        </div>
+            variant='outlined'
+            helperText='Tell us a little about yourself'
+            className={classes.field}
+          ></TextField>
 
-        <div className='my-2'>
-          <button
-            onClick={() => toggleSocialInputs(!displaySocialInputs)}
-            type='button'
-            className='btn btn-light'
-          >
-            Add Social Network Links
-          </button>
-          <span>Optional</span>
-        </div>
+          <div>
+            <Button
+              type='submit'
+              fullWidth
+              variant='outlined'
+              color='secondary'
+              margin='normal'
+              onClick={() => toggleSocialInputs(!displaySocialInputs)}
+              className={classes.submit}
+            >
+              Add Social Network Links
+            </Button>{' '}
+          </div>
 
-        {displaySocialInputs && (
-          <Fragment>
-            <div className='form-group social-input'>
-              <i className='fab fa-twitter fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Twitter URL'
-                name='twitter'
-                value={twitter}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-facebook fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Facebook URL'
-                name='facebook'
-                value={facebook}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-youtube fa-2x'></i>
-              <input
-                type='text'
-                placeholder='YouTube URL'
-                name='youtube'
-                value={youtube}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-linkedin fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                value={linkedin}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-
-            <div className='form-group social-input'>
-              <i className='fab fa-instagram fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Instagram URL'
-                name='instagram'
-                value={instagram}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-            <input type='submit' className='btn btn-primary my-1' />
-            <Link className='btn btn-light my-1' to='/dashboard'>
-              Go Back
-            </Link>
-          </Fragment>
-        )}
-      </form>
-    </Fragment>
+          {displaySocialInputs && (
+            <Fragment>
+              <Typography variant='caption' color='textSecondary'>
+                This step is optional
+              </Typography>
+              <Box className={classes.social}>
+                <TwitterIcon />
+                <TextField
+                  id='outlined-github'
+                  label='Twitter URL'
+                  name='twitter'
+                  value={twitter}
+                  margin='normal'
+                  fullWidth
+                  onChange={(e) => onChange(e)}
+                  variant='outlined'
+                  className={classes.field}
+                ></TextField>
+              </Box>
+              <Box className={classes.social}>
+                <FacebookIcon />
+                <TextField
+                  id='outlined-facebook'
+                  label='Facebook URL'
+                  name='facebook'
+                  value={facebook}
+                  margin='normal'
+                  fullWidth
+                  onChange={(e) => onChange(e)}
+                  variant='outlined'
+                  className={classes.field}
+                ></TextField>
+              </Box>
+              <Box className={classes.social}>
+                <YouTubeIcon />
+                <TextField
+                  id='outlined-youtube'
+                  label='Youtube URL'
+                  name='youtube'
+                  value={youtube}
+                  margin='normal'
+                  fullWidth
+                  onChange={(e) => onChange(e)}
+                  variant='outlined'
+                  className={classes.field}
+                ></TextField>
+              </Box>
+              <Box className={classes.social}>
+                <LinkedInIcon />
+                <TextField
+                  id='outlined-linkedin'
+                  label='Linkedin URL'
+                  name='linkedin'
+                  margin='normal'
+                  fullWidth
+                  value={linkedin}
+                  onChange={(e) => onChange(e)}
+                  variant='outlined'
+                  className={classes.field}
+                ></TextField>
+              </Box>
+              <Box className={classes.social}>
+                <InstagramIcon />
+                <TextField
+                  id='outlined-instagram'
+                  label='Instagram URL'
+                  name='instagram'
+                  margin='normal'
+                  fullWidth
+                  value={instagram}
+                  onChange={(e) => onChange(e)}
+                  variant='outlined'
+                  className={classes.field}
+                ></TextField>
+              </Box>
+              <Button
+                type='submit'
+                fullWidth
+                margin='auto'
+                variant='contained'
+                color='secondary'
+                className={classes.submit}
+              >
+                Submit
+              </Button>{' '}
+              <Link href='/dashboard' color='secondary'>
+                Go Back
+              </Link>
+            </Fragment>
+          )}
+        </form>
+      </Container>
+    </Container>
   );
 };
 

@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import Spinner from "../layout/Spinner";
-import { getGithubRepos } from "../../actions/profile";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
+import { getGithubRepos } from '../../actions/profile';
+import { Typography, Link, Divider, Box } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const ProfilGithub = ({ username, getGithubRepos, repos }) => {
   useEffect(() => {
@@ -10,41 +13,40 @@ const ProfilGithub = ({ username, getGithubRepos, repos }) => {
   }, [getGithubRepos]);
 
   return (
-    <div className='profile-github'>
-      <h2 className='text-primary my-1'>Github Repos</h2>
+    <div>
+      <Typography variant='h4'>Github Repos</Typography>
+      <Divider />
       {repos === null ? (
         <Spinner />
       ) : (
         repos.map((repo) => (
-          <div key={repo._id} className='repo bg-dark p-1 my-1'>
-            <div>
-              <h4>
-                <a
+          <List
+            key={repo._id}
+            style={{ display: 'flex', flexDirection: 'row' }}
+          >
+            <ListItem>
+              <Typography variant='h6'>
+                <Link
                   href={repo.html_url}
                   target='_blank'
                   rel='noopener noreferrer'
                 >
                   {repo.name}
-                </a>
-              </h4>
-              <p>{repo.description}</p>
-            </div>
-            <div>
-              <ul>
-                <li className='badge badge-primary'>
-                  Stars: {repo.stargazers_count}
-                </li>
-              </ul>
-              <ul>
-                <li className='badge badge-dark'>
-                  Watchers: {repo.watchers_count}
-                </li>
-              </ul>
-              <ul>
-                <li className='badge badge-light'>Forks: {repo.forks_count}</li>
-              </ul>
-            </div>
-          </div>
+                  <Typography variant='caption'></Typography>
+                </Link>
+              </Typography>
+              <ListItem>
+                <Typography variant='caption'>{repo.description}</Typography>
+              </ListItem>
+            </ListItem>
+            <Box display={{ xs: 'none', md: 'block' }}>
+              <ListItem>
+                <ListItem>Stars: {repo.stargazers_count}</ListItem>
+                <ListItem>Watchers: {repo.watchers_count}</ListItem>
+                <ListItem>Forks: {repo.forks_count}</ListItem>
+              </ListItem>
+            </Box>
+          </List>
         ))
       )}
     </div>

@@ -20,7 +20,34 @@ import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
-import './App.css';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline, Paper } from '@material-ui/core';
+import Image from './img/showcase.jpg';
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      dark: '#354874',
+      main: '#9700d9',
+      light: '#7085b7',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      dark: '#460070',
+      main: '#6400a1',
+      light: '#8333b3',
+    },
+  },
+});
+const styles = {
+  paperContainer: {
+    backgroundImage: `url(${Image})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'repeat',
+    height: '100vh',
+  },
+};
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -32,45 +59,50 @@ const App = () => {
   }, []); //[] brackets make it run once, not in a loop, sort of like componentDidMount
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Fragment>
-          <Navbar />
-          <Route exact path='/' component={Landing} />
-          <section className='container'>
-            <Alert />
-            <Switch>
-              <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/profiles' component={Profiles} />
-              <Route exact path='/profile/:id' component={Profile} />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute
-                exact
-                path='/create-profile'
-                component={CreateProfile}
-              />
-              <PrivateRoute
-                exact
-                path='/edit-profile'
-                component={EditProfile}
-              />
-              <PrivateRoute
-                exact
-                path='/add-experience'
-                component={AddExperience}
-              />
-              <PrivateRoute
-                exact
-                path='/add-education'
-                component={AddEducation}
-              />
-              <PrivateRoute exact path='/posts' component={Posts} />
-            </Switch>
-          </section>
-        </Fragment>
-      </Router>
-    </Provider>
+    <ThemeProvider theme={darkTheme}>
+      <Paper style={styles.paperContainer}>
+        <CssBaseline />
+        <Provider store={store}>
+          <Router>
+            <Fragment>
+              <Navbar />
+              <Route exact path='/' component={Landing} />
+              <section className='container'>
+                <Alert />
+                <Switch>
+                  <Route exact path='/register' component={Register} />
+                  <Route exact path='/login' component={Login} />
+                  <Route exact path='/profiles' component={Profiles} />
+                  <Route exact path='/profile/:id' component={Profile} />
+                  <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                  <PrivateRoute
+                    exact
+                    path='/create-profile'
+                    component={CreateProfile}
+                  />
+                  <PrivateRoute
+                    exact
+                    path='/edit-profile'
+                    component={EditProfile}
+                  />
+                  <PrivateRoute
+                    exact
+                    path='/add-experience'
+                    component={AddExperience}
+                  />
+                  <PrivateRoute
+                    exact
+                    path='/add-education'
+                    component={AddEducation}
+                  />
+                  <PrivateRoute exact path='/posts' component={Posts} />
+                </Switch>
+              </section>
+            </Fragment>
+          </Router>
+        </Provider>
+      </Paper>
+    </ThemeProvider>
   );
 };
 

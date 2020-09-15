@@ -1,9 +1,39 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+
+import Link from '@material-ui/core/Link';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.light,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -49,68 +79,104 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
   };
 
+  const classes = useStyles();
+
   // redirect if registered
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Sign Up</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Create Your Account
-      </p>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Name'
+    <Container
+      component='main'
+      //
+      style={{
+        background: 'black',
+        height: '90vh',
+        padding: '1em 0 0 0',
+      }}
+    >
+      <CssBaseline />
+      <Container className={classes.paper} maxWidth='xs'>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Sign up
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
+            id='name'
+            label='Name'
             name='name'
+            autoComplete='email'
+            autoFocus
             value={name}
             onChange={(e) => onChange(e)}
-            required
           />
-        </div>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Email Address'
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
+            id='email'
+            label='Email Address'
             name='email'
+            autoComplete='email'
+            autoFocus
             value={email}
             onChange={(e) => onChange(e)}
-            required
           />
-          <small className='form-text'>
+          <Typography variant='caption' style={{ color: 'grey' }}>
             This site uses Gravatar so if you want a profile image, use a
             Gravatar email
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
+          </Typography>
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
             name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
             value={password}
             onChange={(e) => onChange(e)}
             minLength='6'
           />
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Confirm Password'
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
             name='password2'
+            label='Confirm password'
+            type='password'
+            id='password2'
             value={password2}
             onChange={(e) => onChange(e)}
             minLength='6'
           />
-        </div>
-        <input type='submit' className='btn btn-primary' value='Register' />
-      </form>
-      <p className='my-1'>
-        Already have an account? <Link to='/login'>Sign In</Link>
-      </p>
-    </Fragment>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='secondary'
+            className={classes.submit}
+          >
+            Register
+          </Button>{' '}
+        </form>
+        <Typography variant='body1'>
+          Already have an account? <Link href='/login'>Sign In</Link>
+        </Typography>
+      </Container>
+    </Container>
   );
 };
 

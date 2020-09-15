@@ -1,14 +1,50 @@
-import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import Spinner from "../layout/Spinner";
-import ProfileTop from "./ProfileTop";
-import ProfileExperience from "./ProfileExperience";
-import ProfileEducation from "./ProfileEducation";
-import ProfileAbout from "./ProfileAbout";
-import ProfileGithub from "./ProfileGithub";
-import { getProfileById } from "../../actions/profile";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
+import ProfileTop from './ProfileTop';
+import ProfileExperience from './ProfileExperience';
+import ProfileEducation from './ProfileEducation';
+import ProfileAbout from './ProfileAbout';
+import ProfileGithub from './ProfileGithub';
+import { getProfileById } from '../../actions/profile';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Card,
+  Button,
+  Typography,
+  Container,
+  Divider,
+  Grid,
+  Paper,
+} from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.light,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  root: {
+    backgroundColor: 'black',
+    height: 'max-content',
+    padding: '2em 0 0 0',
+    flexGrow: '1',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    background: 'black',
+  },
+  container: {
+    background: 'transparent',
+  },
+}));
 
 const Profile = ({
   getProfileById,
@@ -16,66 +52,76 @@ const Profile = ({
   auth,
   match,
 }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     getProfileById(match.params.id);
   }, [getProfileById, match.params.id]);
   return (
-    <Fragment>
+    <Container>
       {profile === null || loading ? (
         <Spinner />
       ) : (
-        <Fragment>
-          <Link to='/profiles' className='btn btn-light'>
+        <Card className={classes.root}>
+          <Button href='/profiles' variant='outlined' style={{ margin: '1em' }}>
             Back to Profiles
-          </Link>
+          </Button>
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (
-              <Link to='/edit-profile' className='btn btn-dark'>
+              <Button href='/edit-profile' variant='outlined'>
                 Edit Profile
-              </Link>
+              </Button>
             )}
-          <div className='profile-grid my-1'>
-            <ProfileTop profile={profile} />
-            <ProfileAbout profile={profile} />
-            <div className='profile-exp bg-white p-2'>
-              <h2 class='text-primary'>Experience</h2>
-              {profile.experience.length > 0 ? (
-                <Fragment>
-                  {profile.experience.map((experience) => (
-                    <ProfileExperience
-                      key={experience._id}
-                      experience={experience}
-                    />
-                  ))}
-                </Fragment>
-              ) : (
-                <h4>No experience credentials</h4>
-              )}
-            </div>
-            <div className='profile-edu bg-white p-2'>
-              <h2 class='text-primary'>Education</h2>
-              {profile.education.length > 0 ? (
-                <Fragment>
-                  {profile.education.map((education) => (
-                    <ProfileEducation
-                      key={education._id}
-                      education={education}
-                    />
-                  ))}
-                </Fragment>
-              ) : (
-                <h4>No education credentials</h4>
-              )}
-            </div>
+          <Grid container spacing={3}>
+            <Grid item md={6} style={{ textAlign: 'center' }}>
+              <Paper className={classes.paper}>
+                {' '}
+                <ProfileTop profile={profile} />
+                <ProfileAbout profile={profile} />
+              </Paper>
+            </Grid>
 
-            {profile.githubusername && (
-              <ProfileGithub username={profile.githubusername} />
-            )}
-          </div>
-        </Fragment>
+            <Grid item md={6}>
+              <Paper className={classes.paper}>
+                {' '}
+                <Typography variant='h4'>Experience</Typography>
+                <Divider />
+                {profile.experience.length > 0 ? (
+                  <div>
+                    {profile.experience.map((experience) => (
+                      <ProfileExperience
+                        key={experience._id}
+                        experience={experience}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <h4>No experience credentials</h4>
+                )}
+                <Typography variant='h4'>Education</Typography>
+                <Divider />
+                {profile.education.length > 0 ? (
+                  <div>
+                    {profile.education.map((education) => (
+                      <ProfileEducation
+                        key={education._id}
+                        education={education}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <h4>No education credentials</h4>
+                )}
+                {profile.githubusername && (
+                  <ProfileGithub username={profile.githubusername} />
+                )}
+              </Paper>
+            </Grid>
+          </Grid>
+        </Card>
       )}
-    </Fragment>
+    </Container>
   );
 };
 

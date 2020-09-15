@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography, Link } from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import LanguageIcon from '@material-ui/icons/Language';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const ProfileTop = ({
   profile: {
@@ -12,45 +19,60 @@ const ProfileTop = ({
   },
 }) => {
   return (
-    <div className='profile-top bg-primary p-2'>
-      <img className='round-img my-1' src={avatar} alt='' />
-      <h1 className='large'>{name}</h1>
-      <p className='lead'>
+    <div>
+      <img src={avatar} alt='' style={{ borderRadius: '10em' }} />
+      <Typography component='h3' variant='h4' gutterBottom>
+        {name}
+      </Typography>
+      <Typography variant='h5' component='h6' gutterBottom>
         {status} {company && <span>at {company}</span>}
-      </p>
-      <p>{location && <span>{location}</span>}</p>
-      <div className='icons my-1'>
+      </Typography>
+
+      {location && <span>{location}</span>}
+      <Typography variant='h5' component='h6' gutterBottom>
         {website && (
-          <a href={website} target='_blank' rel='noopener noreferrer'>
-            <i className='fas fa-globe fa-2x'></i>
-          </a>
+          <Link href={website} target='_blank' rel='noopener noreferrer'>
+            <LanguageIcon />
+          </Link>
         )}
         {social && social.twitter && (
-          <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-twitter fa-2x'></i>
-          </a>
+          <Link href={social.twitter} target='_blank' rel='noopener noreferrer'>
+            <TwitterIcon />
+          </Link>
         )}
         {social && social.facebook && (
-          <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-facebook fa-2x'></i>
-          </a>
+          <Link
+            href={social.facebook}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FacebookIcon />
+          </Link>
         )}
         {social && social.linkedin && (
-          <a href={social.linkedin} target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-linkedin fa-2x'></i>
-          </a>
+          <Link
+            href={social.linkedin}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <LinkedInIcon />
+          </Link>
         )}
         {social && social.youtube && (
-          <a href={social.youtube} target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-youtube fa-2x'></i>
-          </a>
+          <Link href={social.youtube} target='_blank' rel='noopener noreferrer'>
+            <YouTubeIcon />
+          </Link>
         )}
         {social && social.instagram && (
-          <a href={social.instagram} target='_blank' rel='noopener noreferrer'>
-            <i className='fab fa-instagram fa-2x'></i>
-          </a>
+          <Link
+            href={social.instagram}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <InstagramIcon />
+          </Link>
         )}
-      </div>
+      </Typography>
     </div>
   );
 };

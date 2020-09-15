@@ -1,19 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Button, Box } from '@material-ui/core';
+import PersonIcon from '@material-ui/icons/Person';
+import WorkIcon from '@material-ui/icons/Work';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 
 export const DashboardActions = () => {
   return (
-    <div className='dash-buttons'>
-      <Link to='/edit-profile' className='btn btn-light'>
-        <i className='fas fa-user-circle text-primary'></i> Edit Profile
-      </Link>
-      <Link to='/add-experience' className='btn btn-light'>
-        <i className='fab fa-black-tie text-primary'></i> Add Experience
-      </Link>
-      <Link to='/add-education' className='btn btn-light'>
-        <i className='fas fa-graduation-cap text-primary'></i> Add Education
-      </Link>
-    </div>
+    <Box padding='2em 3em'>
+      <Button
+        href='/edit-profile'
+        variant='outlined'
+        style={{ margin: '0 1em' }}
+      >
+        <PersonIcon />
+        {' '} Edit Profile
+      </Button>
+      <Button
+        href='/add-experience'
+        variant='outlined'
+        style={{ margin: '0 1em' }}
+      >
+        <WorkIcon />
+        {' '} Add Experience
+      </Button>
+      <Button
+        href='/add-education'
+        variant='outlined'
+        style={{ margin: '0 1em' }}
+      >
+        <LibraryBooksIcon />
+        {' '} Add Education
+      </Button>
+    </Box>
   );
 };
 

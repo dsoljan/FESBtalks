@@ -4,6 +4,8 @@ import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux';
 import { getProfiles } from '../../actions/profile';
 import ProfileItem from './ProfileItem';
+import { Typography, Container, Box } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   useEffect(() => {
@@ -15,19 +17,42 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
       {loading ? (
         <Spinner />
       ) : (
-        <Fragment>
-          <h1 className='large text-primary'>Profiles</h1>
-          <p className='lead'>Browse and connect with people</p>
-          <div className='profiles'>
+        <Container
+          style={{
+            background: 'black',
+            height: 'fit-content',
+            paddingBottom: '3em',
+          }}
+        >
+          <CssBaseline />
+          <Typography variant='h2' style={{ padding: '10px' }}>
+            {' '}
+            Profiles
+          </Typography>
+          <Typography
+            variant='body1'
+            color='textSecondary'
+            style={{ paddingLeft: '3em' }}
+          >
+            Browse and connect with people
+          </Typography>
+          <Box align='center'>
             {profiles.length > 0 ? (
               profiles.map((profile) => (
                 <ProfileItem key={profile._id} profile={profile}></ProfileItem>
               ))
             ) : (
-              <h4>No profiles found</h4>
+              <Container
+                style={{
+                  background: 'black',
+                  height: '75vh',
+                }}
+              >
+                No profiles found
+              </Container>
             )}
-          </div>
-        </Fragment>
+          </Box>
+        </Container>
       )}
     </Fragment>
   );

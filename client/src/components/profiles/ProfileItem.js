@@ -1,6 +1,39 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import RoomIcon from '@material-ui/icons/Room';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '2em',
+    paddingTop: '1em',
+  },
+  media: {
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '1em',
+    borderRadius: '20em',
+    maxHeight: '40%',
+  },
+  side: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+});
 
 const ProfileItem = ({
   profile: {
@@ -11,27 +44,48 @@ const ProfileItem = ({
     skills,
   },
 }) => {
+  const classes = useStyles();
+
   return (
-    <div className='profile bg-light'>
-      <img src={avatar} alt='' className='round-img' />
-      <div>
-        <h2>{name}</h2>
-        <p>
-          {status} {company && <span> at {company}</span>}
-        </p>
-        <p className='my-1'>{location && <span>{location}</span>}</p>
-        <Link to={`/profile/${_id}`} className='btn btn-primary'>
+    <Card className={classes.root}>
+      <CardActionArea>
+        <Typography>
+          {location && (
+            <RoomIcon
+              style={{
+                paddingTop: '10px',
+              }}
+            />
+          )}
+          {location && <span>{location}</span>}
+        </Typography>
+        <CardContent>
+          <img className={classes.media} src={avatar} alt='' />
+          <Box className={classes.side}>
+            <div>
+              <Typography gutterBottom variant='h5' component='h2'>
+                {name}
+              </Typography>
+              <Typography variant='body2' color='textSecondary' component='p'>
+                {status} {company && <span> at {company}</span>}
+              </Typography>
+            </div>
+            <div>
+              {skills.slice(0, 4).map((skill, index) => (
+                <p key={index}>
+                  <i className='fas fa-check' /> {skill}
+                </p>
+              ))}
+            </div>
+          </Box>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button href={`/profile/${_id}`} size='small'>
           View Profile
-        </Link>
-      </div>
-      <ul>
-        {skills.slice(0, 4).map((skill, index) => (
-          <li key={index} className='text-primary'>
-            <i className='fas fa-check' /> {skill}
-          </li>
-        ))}
-      </ul>
-    </div>
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
