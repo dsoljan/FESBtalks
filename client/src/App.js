@@ -10,7 +10,8 @@ import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
-import Alert from './components/layout/Alert';
+import Post from './components/post/Post';
+import Alerts from './components/layout/Alerts';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -45,7 +46,8 @@ const styles = {
     backgroundImage: `url(${Image})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'repeat',
-    height: '100vh',
+    maxHeight: 'maxContent',
+    minHeight: '100vh',
   },
 };
 
@@ -67,8 +69,8 @@ const App = () => {
             <Fragment>
               <Navbar />
               <Route exact path='/' component={Landing} />
-              <section className='container'>
-                <Alert />
+              <section>
+                <Alerts />
                 <Switch>
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
@@ -96,6 +98,7 @@ const App = () => {
                     component={AddEducation}
                   />
                   <PrivateRoute exact path='/posts' component={Posts} />
+                  <PrivateRoute exact path='/posts/:id' component={Post} />
                 </Switch>
               </section>
             </Fragment>

@@ -51,7 +51,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert('Passwords do not match', 'danger'); //ne kuzin
+      setAlert('Passwords do not match', 'error'); //ne kuzin
     } else {
       register({
         name,

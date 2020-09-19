@@ -97,7 +97,9 @@ const Profile = ({
                     ))}
                   </div>
                 ) : (
-                  <h4>No experience credentials</h4>
+                  <Typography style={{ color: 'grey' }} paragraph>
+                    No experience credentials
+                  </Typography>
                 )}
                 <Typography variant='h4'>Education</Typography>
                 <Divider />
@@ -111,7 +113,9 @@ const Profile = ({
                     ))}
                   </div>
                 ) : (
-                  <h4>No education credentials</h4>
+                  <Typography style={{ color: 'grey' }} paragraph>
+                    No education credentials
+                  </Typography>
                 )}
                 {profile.githubusername && (
                   <ProfileGithub username={profile.githubusername} />

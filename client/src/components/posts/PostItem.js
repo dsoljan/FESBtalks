@@ -1,9 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { addLike, removeLike, deletePost } from '../../actions/post';
+import {
+  Card,
+  Link,
+  Typography,
+  Container,
+  Grid,
+  IconButton,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import MessageIcon from '@material-ui/icons/Message';
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin: '2em',
+    padding: '2em 1em',
+    maxWidth: '700px',
+  },
+  icons: {
+    marginTop: '2em',
+  },
+});
 
 const PostItem = ({
   auth,
@@ -11,48 +37,88 @@ const PostItem = ({
   removeLike,
   deletePost,
   post: { _id, text, name, avatar, user, likes, comments, date },
-}) => (
-  <div class='post bg-white p-1 my-1'>
-    <div>
-      <Link to={`/profile/${user}`}>
-        <img class='round-img' src={avatar} alt='' />
-        <h4>{name}</h4>
-      </Link>
-    </div>
-    <div>
-      <p class='my-1'>{text}</p>
-      <p class='post-date'>
-        Posted on<Moment format='DD/MM/YYYY'>{date}</Moment>
-      </p>
-      <button onClick={(e) => addLike(_id)} type='button' class='btn btn-light'>
-        <i class='fas fa-thumbs-up'></i>{' '}
-        {likes.length > 0 && <span>{likes.length}</span>}
-      </button>
-      <button
-        onClick={(e) => removeLike(_id)}
-        type='button'
-        class='btn btn-light'
-      >
-        <i class='fas fa-thumbs-down'></i>
-      </button>
-      <Link to={`/post/:${_id}`} class='btn btn-primary'>
-        Discussion{' '}
-        {comments.length > 0 && (
-          <span class='comment-count'>{comments.length}</span>
-        )}
-      </Link>
-      {!auth.loading && user === auth.user._id && (
-        <button
-          onClick={(e) => deletePost(_id)}
-          type='button'
-          class='btn btn-danger'
-        >
-          <i class='fas fa-times'></i>
-        </button>
-      )}
-    </div>
-  </div>
-);
+  showActions,
+}) => {
+  const classes = useStyles();
+  return (
+    <Card className={classes.root} maxWidth='sm'>
+      <Grid container>
+        <Grid item xs={12} sm={4}>
+          <Link href={`/profile/${user}`}>
+            <img
+              src={avatar}
+              alt=''
+              style={{
+                borderRadius: '10em',
+                maxWidth: '7em',
+                position: 'relative',
+                marginLeft: '2em',
+              }}
+            />
+            <Typography variant='h5'>{name}</Typography>
+          </Link>
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <Typography variant='body1'>{text}</Typography>
+          <Typography variant='body2' color='textSecondary'>
+            Posted on{' '}
+            <Moment format='DD/MM/YYYY'>{date}</Moment>
+          </Typography>
+
+          {showActions && (
+            <Container>
+              <IconButton
+                className={classes.icons}
+                aria-label='like'
+                onClick={(e) => addLike(_id)}
+              >
+                {' '}
+                <ThumbUpAltIcon />
+                {' '}
+                {likes.length > 0 && (
+                  <Typography variant='body1'>{likes.length}</Typography>
+                )}
+              </IconButton>
+              <IconButton
+                className={classes.icons}
+                aria-label='dislike'
+                onClick={(e) => removeLike(_id)}
+              >
+                <ThumbDownAltIcon />
+              </IconButton>{' '}
+              <IconButton
+                href={`/posts/${_id}`}
+                className={classes.icons}
+                aria-label='comment'
+              >
+                <MessageIcon />
+                {comments.length > 0 && (
+                  <Typography variant='body1'>
+                    {' '}
+                    {comments.length}
+                  </Typography>
+                )}
+              </IconButton>
+              {!auth.loading && user === auth.user._id && (
+                <IconButton
+                  className={classes.icons}
+                  aria-label='delete'
+                  onClick={(e) => deletePost(_id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </Container>
+          )}
+        </Grid>
+      </Grid>
+    </Card>
+  );
+};
+
+PostItem.defaultProps = {
+  showActions: true,
+};
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,

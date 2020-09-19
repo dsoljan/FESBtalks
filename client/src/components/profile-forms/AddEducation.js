@@ -1,8 +1,38 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEducation } from '../../actions/profile';
+import {
+  TextField,
+  CssBaseline,
+  Container,
+  Link,
+  Typography,
+  Button,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+    paddingRight: '2em',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  field: {
+    margin: '0.75em 0',
+  },
+}));
 
 const AddEducation = ({ addEducation, history }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +44,8 @@ const AddEducation = ({ addEducation, history }) => {
     current: false,
     description: '',
   });
+
+  const classes = useStyles();
 
   const [toDateDisabled, toggleDisabled] = useState(false);
 
@@ -31,99 +63,149 @@ const AddEducation = ({ addEducation, history }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
-    <Fragment>
-      <h1 className='large text-primary'>Add Your Education</h1>
-      <p className='lead'>
-        <i className='fas fa-code-branch'></i> Add any school or bootcamp that
-        you have attended
-      </p>
-      <small>* = required field</small>
-      <form
-        className='form'
-        onSubmit={(e) => {
-          e.preventDefault();
-          addEducation(formData, history);
-        }}
+    <Container
+      component='main'
+      style={{
+        background: 'black',
+        height: 'max-content',
+        padding: '1em 0 2em 0',
+      }}
+    >
+      <CssBaseline />
+      <Typography variant='h2' style={{ padding: '15px' }}>
+        {' '}
+        Add Your Education
+      </Typography>
+      <Typography
+        variant='body1'
+        color='textSecondary'
+        style={{ paddingLeft: '3em' }}
       >
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* School or Bootcamp'
+        {' '}
+        Add any school or bootcamp that you have attended
+      </Typography>
+      <Typography
+        variant='body2'
+        color='textSecondary'
+        style={{ paddingLeft: '3em' }}
+      >
+        {' '}
+        (* fields are required)
+      </Typography>
+
+      <Container className={classes.paper} maxWidth='xs'>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            addEducation(formData, history);
+          }}
+        >
+          <TextField
+            id='outlined-school'
+            label='School or Bootcamp'
             name='school'
             value={school}
             onChange={(e) => onChange(e)}
             required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* Degree or Certificate'
+            variant='outlined'
+            margin='normal'
+            fullWidth
+          ></TextField>
+          <TextField
+            id='outlined-degree'
+            label='Degree or Certificate'
             name='degree'
             value={degree}
             onChange={(e) => onChange(e)}
             required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Field of study'
+            variant='outlined'
+            margin='normal'
+            fullWidth
+          ></TextField>
+          <TextField
+            id='outlined-field'
+            label='Field of study'
             name='fieldofstudy'
             value={fieldofstudy}
             onChange={(e) => onChange(e)}
-          />
-        </div>
-        <div className='form-group'>
-          <h4>From Date</h4>
-          <input
+            variant='outlined'
+            margin='normal'
+            fullWidth
+          ></TextField>
+          <Typography variant='h6'>From Date</Typography>
+          <TextField
+            id='from-date'
             type='date'
+            defaultValue=''
             name='from'
             value={from}
             onChange={(e) => onChange(e)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant='outlined'
+            margin='normal'
+            fullWidth
           />
-        </div>
-        <div className='form-group'>
-          <p>
-            <input
-              type='checkbox'
-              name='current'
-              checked={current}
-              value={current}
-              onChange={(e) => {
-                setFormData({ ...formData, current: !current });
-                toggleDisabled(!toDateDisabled);
-              }}
-            />{' '}
-            Current
-          </p>
-        </div>
-        <div className='form-group'>
-          <h4>To Date</h4>
-          <input
+          <FormControlLabel
+            control={
+              <Checkbox
+                name='current'
+                checked={current}
+                value={current}
+                onChange={(e) => {
+                  setFormData({ ...formData, current: !current });
+                  toggleDisabled(!toDateDisabled);
+                }}
+              />
+            }
+            label='Current'
+          />{' '}
+          <Typography variant='h6'>From Date</Typography>
+          <TextField
+            id='to-date'
             type='date'
+            color='primary'
             name='to'
+            label=''
             value={to}
+            variant='outlined'
+            margin='normal'
+            fullWidth
             onChange={(e) => onChange(e)}
             disabled={toDateDisabled ? 'disabled' : ''}
           />
-        </div>
-        <div className='form-group'>
-          <textarea
+          <TextField
+            id='outlined-description'
+            label='Program description'
             name='description'
-            cols='30'
-            rows='5'
-            placeholder='Program Description'
             value={description}
+            margin='normal'
+            fullWidth
+            multiline
+            rows={4}
             onChange={(e) => onChange(e)}
-          ></textarea>
-        </div>
-        <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
-          Go Back
-        </a>
-      </form>
-    </Fragment>
+            variant='outlined'
+            className={classes.field}
+          ></TextField>
+          <Button
+            type='submit'
+            fullWidth
+            margin='auto'
+            variant='contained'
+            color='secondary'
+            className={classes.submit}
+          >
+            Submit
+          </Button>{' '}
+          <Link href='/dashboard' color='secondary'>
+            Go Back
+          </Link>
+        </form>
+      </Container>
+    </Container>
   );
 };
 

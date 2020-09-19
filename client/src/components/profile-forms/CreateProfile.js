@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '2em',
+    paddingRight: '2em',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   field: {
-    margin: '0.75em',
+    margin: '0.75em 0',
   },
   social: {
     display: 'flex',
@@ -125,7 +125,6 @@ const CreateProfile = ({ createProfile, history }) => {
             value={status}
             variant='outlined'
             fullWidth
-            margin='auto'
             onChange={(e) => onChange(e)}
             className={classes.field}
           >

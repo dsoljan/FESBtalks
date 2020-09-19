@@ -16,7 +16,7 @@ const ProfileEducation = ({
       </Moment>{' '}
       -{' '}
       {!to ? (
-        'Now'
+        <span style={{ color: 'grey' }}>Now</span>
       ) : (
         <Moment format='DD/MM/YYYY' style={{ color: 'grey' }}>
           {to}

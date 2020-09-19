@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,7 +10,6 @@ import {
   Link,
   Typography,
   Button,
-  Box,
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '2em',
+    paddingRight: '2em',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -132,8 +131,7 @@ const AddExperience = ({ addExperience, history }) => {
             id='from-date'
             type='date'
             defaultValue=''
-            // name='from'
-
+            name='from'
             value={from}
             onChange={(e) => onChange(e)}
             InputLabelProps={{
@@ -181,7 +179,6 @@ const AddExperience = ({ addExperience, history }) => {
             rows={4}
             onChange={(e) => onChange(e)}
             variant='outlined'
-            helperText='Tell us a little about yourself'
             className={classes.field}
           ></TextField>
           <Button

@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import RoomIcon from '@material-ui/icons/Room';
+import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles({
   root: {
@@ -73,7 +74,8 @@ const ProfileItem = ({
             <div>
               {skills.slice(0, 4).map((skill, index) => (
                 <p key={index}>
-                  <i className='fas fa-check' /> {skill}
+                  <CheckIcon />
+                  {skill}
                 </p>
               ))}
             </div>
