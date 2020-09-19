@@ -31,6 +31,7 @@ const Dashboard = ({
       style={{
         background: 'black',
         height: 'fit-content',
+        maxWidth: 'xs',
       }}
     >
       <CssBaseline />

@@ -140,6 +140,7 @@ const AddExperience = ({ addExperience, history }) => {
             variant='outlined'
             margin='normal'
             fullWidth
+            required
           />
           <FormControlLabel
             control={

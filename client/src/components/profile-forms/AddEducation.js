@@ -132,6 +132,7 @@ const AddEducation = ({ addEducation, history }) => {
             onChange={(e) => onChange(e)}
             variant='outlined'
             margin='normal'
+            required
             fullWidth
           ></TextField>
           <Typography variant='h6'>From Date</Typography>
@@ -145,6 +146,7 @@ const AddEducation = ({ addEducation, history }) => {
             InputLabelProps={{
               shrink: true,
             }}
+            required
             variant='outlined'
             margin='normal'
             fullWidth

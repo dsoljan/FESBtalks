@@ -231,7 +231,6 @@ const CreateProfile = ({ createProfile, history }) => {
 
           <div>
             <Button
-              type='submit'
               fullWidth
               variant='outlined'
               color='secondary'

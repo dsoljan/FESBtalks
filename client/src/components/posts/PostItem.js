@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { addLike, removeLike, deletePost } from '../../actions/post';
 import {
   Card,
-  Link,
   Typography,
   Container,
+  Link,
   Grid,
   IconButton,
 } from '@material-ui/core';
