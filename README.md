@@ -1,3 +1,3 @@
 # FESBtalks
 
-[Deployed on Heroku.](http://fesbtalks.herokuapp.com/)
+[Deployed using Heroku.](http://fesbtalks.herokuapp.com/)
