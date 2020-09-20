@@ -27,14 +27,7 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
       <Button variant='outlined' href='/posts'>
         Go Back
       </Button>
-      <Container
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <Container maxWidth='sm'>
         <PostItem post={post} showActions={false} />
         <CommentForm postId={post._id} />
         <Container style={{ paddingTop: '2em' }} maxWidth='sm'>
